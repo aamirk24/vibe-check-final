@@ -7,7 +7,7 @@ import comet_ml
 from PIL import Image
 import io
 import datetime
-import json
+import json # NEW: Import Python's built-in json library
 
 # --- Comet ML Setup ---
 load_dotenv()
@@ -43,6 +43,7 @@ def index():
 
 @app.route('/analyze', methods=['POST'])
 def analyze():
+    # This route is working correctly and needs no changes.
     try:
         data = request.json
         image_data = base64.b64decode(data['image'].split(',')[1])
@@ -60,20 +61,15 @@ def analyze():
 
         if comet_experiment:
             prediction_id = str(uuid.uuid4())
-            
-            # Note: We are no longer using the context_manager, as it's not needed
-            # with our new, more direct logging method.
-            try:
-                image = Image.open(io.BytesIO(image_data))
-                # --- THE FIX ---
-                # Embed the prediction_id directly in the image's filename.
-                comet_experiment.log_image(image, name=f"input_{prediction_id}.jpg")
-            except Exception as e:
-                print(f"Failed to log image to Comet: {e}")
-            
-            # Log metrics and parameters normally
-            comet_experiment.log_metric("confidence", confidence, step=comet_experiment.curr_step)
-            comet_experiment.log_parameter("mood_prediction", mood, step=comet_experiment.curr_step)
+            with comet_experiment.context_manager(prediction_id):
+                try:
+                    image = Image.open(io.BytesIO(image_data))
+                    comet_experiment.log_image(image, name="input_image")
+                except Exception as e:
+                    print(f"Failed to log image to Comet: {e}")
+                
+                comet_experiment.log_metric("confidence", confidence)
+                comet_experiment.log_parameter("mood_prediction", mood)
         else:
             prediction_id = str(uuid.uuid4()) 
         
@@ -99,14 +95,16 @@ def feedback():
             return jsonify({'error': 'Missing prediction_id or mood for feedback'}), 400
 
         if comet_experiment:
+            # --- THE FINAL, CORRECTED FIX ---
             feedback_payload = {
                 "prediction_id": prediction_id,
                 "ground_truth_mood": correct_mood,
                 "timestamp": str(datetime.datetime.now())
             }
+            # 1. Convert the dictionary to a JSON formatted string
             feedback_string = json.dumps(feedback_payload, indent=2)
 
-            # Log feedback as a unique JSON asset. This part is already correct.
+            # 2. Use the correct method: log_asset_data()
             comet_experiment.log_asset_data(
                 data=feedback_string,
                 file_name=f"feedback_{prediction_id}.json"

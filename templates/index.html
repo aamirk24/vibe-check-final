@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeCheck ✨ The Moody Playlist Generator</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>VibeCheck ✨</h1>
+        <p>Let us find the perfect music for your current vibe!</p>
+        <div class="webcam-area">
+            <video id="webcam" autoplay playsinline></video>
+            <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
+        </div>
+        <button id="analyzeBtn">Find My Vibe</button>
+
+        <div id="results" class="hidden">
+            <h2>Detected Mood: <span id="mood"></span></h2>
+
+            <div id="confidence-container">
+                <div class="confidence-label">
+                    <span>Model Confidence</span>
+                    <span id="confidence-value">0%</span>
+                </div>
+                <div id="confidence-bar">
+                    <div id="confidence-bar-fill"></div>
+                </div>
+            </div>
+
+            <div id="playlist-container">
+                </div>
+
+            <div id="feedback-section">
+                <p>Not right? Correct the mood:</p>
+                <select id="mood-feedback">
+                    <option value="happy">Happy</option>
+                    <option value="sad">Sad</option>
+                    <option value="angry">Angry</option>
+                    <option value="fearful">Fearful</option>
+                    <option value="surprised">Surprised</option>
+                    <option value="neutral">Neutral</option>
+                    <option value="disgusted">Disgusted</option>
+                </select>
+                <button id="feedbackBtn">Submit Feedback</button>
+            </div>
+        </div>
+        
+        <div id="loading" class="hidden">
+            <div class="spinner"></div>
+            <p>Analyzing your vibe...</p>
+        </div>
+        
+        <div id="error" class="hidden">
+            <p id="error-message"></p>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+/* --- 1. Global Styles & Color Palette (Dark Mode) --- */
+:root {
+    --primary-start: #6a11cb;
+    --primary-end: #2575fc;
+    --secondary: #cccccc;
+    --background-light: #121212;
+    --background-card: #1e1e1e;
+    --text-primary: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --border-color: #3a3a3c;
+    --success-color: #2ecc71;
+    --error-color: #e74c3c;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+    --font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--background-light);
+    color: var(--text-primary);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align to top to better see scroll */
+    min-height: 100vh;
+    padding: 2rem 1rem;
+}
+
+/* --- 2. Main Container & Layout --- */
+.container {
+    background-color: var(--background-card);
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px var(--shadow-color);
+    text-align: center;
+    max-width: 680px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Space between elements */
+    border: 1px solid var(--border-color);
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, var(--primary-start), var(--primary-end));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.container > p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.webcam-area {
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
+}
+
+video {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* --- 3. Buttons & Controls --- */
+button {
+    font-family: var(--font-family);
+    background-image: linear-gradient(45deg, var(--primary-start) 0%, var(--primary-end) 100%);
+    color: white;
+    border: none;
+    padding: 14px 30px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* --- 4. Results & Feedback Sections --- */
+#results {
+    margin-top: 2rem;
+    text-align: left;
+}
+
+#results h2 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+#playlist-container iframe {
+    border-radius: 12px;
+    margin-top: 1.5rem;
+    border: none;
+}
+
+#feedback-section {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: #2a2a2b; /* Slightly different dark background */
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+#feedback-section p {
+    font-weight: 500;
+    margin: 0;
+}
+
+/* --- 5. Custom Dropdown (Select) --- */
+#mood-feedback {
+    font-family: var(--font-family);
+    padding: 10px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: var(--background-card);
+    color: var(--text-primary);
+    cursor: pointer;
+}
+
+/* --- 6. Confidence Bar --- */
+#confidence-container {
+    margin-bottom: 1.5rem;
+}
+
+.confidence-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+#confidence-bar {
+    width: 100%;
+    background-color: var(--border-color);
+    border-radius: 8px;
+    height: 12px;
+    overflow: hidden;
+}
+
+#confidence-bar-fill {
+    height: 100%;
+    width: 0%; /* Start at 0% width */
+    background-image: linear-gradient(45deg, var(--success-color), #27ae60);
+    border-radius: 8px;
+    transition: width 0.6s ease-in-out;
+}
+
+/* --- 7. Loading & Error States --- */
+.hidden {
+    /* FIXED: Use !important to ensure this rule always applies, hiding the element */
+    display: none !important;
+}
+
+#loading {
+    /* NOTE: This display property is overridden by .hidden on page load */
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem;
+}
+
+.spinner {
+    width: 48px;
+    height: 48px;
+    border: 5px solid var(--border-color);
+    border-bottom-color: var(--primary-end);
+    border-radius: 50%;
+    display: inline-block;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#error {
+    margin-top: 1rem;
+    background-color: #4a1c1c;
+    color: #ff8a80;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #8c3b3b;
+    font-weight: 500;
+}

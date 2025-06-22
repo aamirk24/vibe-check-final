@@ -2,20 +2,12 @@ from transformers import pipeline
 from PIL import Image
 import io
 
-print("Initializing local image classification pipeline...")
-
-# --- THE CHANGE ---
-# Instead of loading from the internet, load from your local fine-tuned model directory.
-# This path should match the NEW_MODEL_NAME from your finetune.py script.
-MODEL_PATH = "./vibecheck-mood-detector-v2" 
-# ---
-
 classifier = pipeline(
     "image-classification", 
-    model=MODEL_PATH, 
+    model="dima806/facial_emotions_image_detection", 
     use_fast=True
 )
-print(f"Pipeline initialized successfully from local model: {MODEL_PATH}")
+print(f"Pipeline initialized successfully!")
 
 
 def detect_mood(image_data):
@@ -53,5 +45,5 @@ def detect_mood(image_data):
             return None
     
     except Exception as e:
-        print(f"Error during local mood detection: {e}. The input image might be invalid.")
+        print(f"Error during mood detection: {e}. The input image might be invalid.")
         return None
