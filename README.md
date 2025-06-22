@@ -53,10 +53,6 @@ This system transforms Comet from a simple training utility into the backbone of
 
 * **Core ML Libraries:** PyTorch, Pillow, `datasets`, `evaluate`, `accelerate`
 
-## 📁 Project Structure
-
-The project is organized into a modular structure for clarity and maintainability.
-<img width="754" alt="Screenshot 2025-06-22 at 11 00 00" src="https://github.com/user-attachments/assets/4d10d851-509a-4c88-8d64-0b9f60d0ba44" />
 
 ## ⚙️ Setup and Installation
  Follow these steps to set up the project locally.
@@ -77,3 +73,13 @@ Note: The finetune.py script requires additional libraries (datasets, accelerate
 
    Start the Flask server:
 <img width="161" alt="Screenshot 2025-06-22 at 11 13 46" src="https://github.com/user-attachments/assets/2063637c-00b8-47d7-bb4e-4f106fe134c4" />
+
+## ▶️ Demo
+<img width="1512" alt="Screenshot 2025-06-22 at 11 52 29" src="https://github.com/user-attachments/assets/22ccae97-ce59-4932-97e4-0473dfcbfb56" />
+
+<img width="1510" alt="Screenshot 2025-06-22 at 11 52 38" src="https://github.com/user-attachments/assets/3f1b87b2-17b1-4c07-941d-d7dec03623fd" />
+
+
+<img width="1512" alt="Screenshot 2025-06-22 at 11 52 54" src="https://github.com/user-attachments/assets/84bd1326-4730-40c4-a9ab-216916acf34d" />
+
+
